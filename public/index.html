@@ -201,12 +201,11 @@ h2{
 
 
 <!-- SUBJECT BUTTONS -->
-<div id="subjects" class="sub-grid"></div>
+
 <div id="timerBox">
   ⏳ Time Left: <span id="timer">05:00</span>
 </div>
-<p id="email"></p>
-<p id="message"></p>
+
 
 <script>
 let alreadyUsed = false;
@@ -319,6 +318,7 @@ startTimer(300);
     .catch(()=>{
       document.getElementById("message").innerText = "Server error";
     });
+	
 }
 
 
