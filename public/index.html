@@ -119,6 +119,25 @@ h2{
 
 
 
+#timerBox{
+  text-align:center;
+  font-size:40px;
+  font-weight:bold;
+  color:#e74c3c;
+  margin:20px 0;
+  display:none;
+}
+
+#timer{
+  font-size:60px;
+  color:#c0392b;
+  background:#fff;
+  padding:10px 20px;
+  border-radius:10px;
+  box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+
 
 
 
@@ -183,7 +202,9 @@ h2{
 
 <!-- SUBJECT BUTTONS -->
 <div id="subjects" class="sub-grid"></div>
-
+<div id="timerBox">
+  ⏳ Time Left: <span id="timer">05:00</span>
+</div>
 <p id="email"></p>
 <p id="message"></p>
 
@@ -235,13 +256,29 @@ function showClass(cls){
   });
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getEmail(category){
   if(alreadyUsed) return;
 
   fetch(`https://email-password-complete-package.onrender.com/email?category=${category}`)
     .then(r=>r.json())
     .then(d=>{
+	
       document.getElementById("email").innerText = d.email || d.message;
+	  
     document.getElementById("message").innerHTML =
   "⚠️ You have permission for only one registered email.<br><br>" +
   "📌 Copy or note the password (email) immediately.<br>" +
@@ -276,10 +313,8 @@ document.getElementById("rightPanel").style.display = "flex";
 	  
 
       // ⏱ START TIMER AFTER EMAIL
-      setTimeout(() => {
-        alert("Session expired");
-        location.reload();
-      }, 5 * 60 * 1000);
+   // ✅ START 5 MIN TIMER
+startTimer(300);
     })
     .catch(()=>{
       document.getElementById("message").innerText = "Server error";
@@ -321,7 +356,34 @@ function goHome(){
 
 
 
+let timerInterval;
 
+function startTimer(duration){
+  let time = duration;
+
+  document.getElementById("timerBox").style.display = "block";
+
+  timerInterval = setInterval(()=>{
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    document.getElementById("timer").innerText =
+      minutes + ":" + seconds;
+
+    time--;
+
+    if(time < 0){
+      clearInterval(timerInterval);
+      document.getElementById("timer").innerText = "00:00";
+
+      alert("⛔ Time Expired! Session Closed.");
+      location.reload();
+    }
+
+  },1000);
+}
 
 
 
