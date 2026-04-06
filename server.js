@@ -27,7 +27,7 @@ app.get("/generate-link", (req, res) => {
   validTokens.set(token, Date.now());
 
   res.json({
-    link: `https://sm-elail-password.onrender.com/?token=${token}`
+    link: `https://email-password-complete-package.onrender.com/?token=${token}`
   });
 });
 
