@@ -84,7 +84,7 @@ app.get("/email", (req, res) => {
     const lastTime = issuedUsers.get(userKey);
     if (now - lastTime < lockTime) {
       return res.status(403).json({
-        message: "You are permitted only one registered email.\n\nYou have already received your email.\n\nTo obtain another, please wait 5 minutes and make a new payment."
+        message: "You are permitted only one registered email.\n\nYou have already received your email.\n\nTo obtain another, please wait 15 minutes and make a new payment."
       });
     }
   }
